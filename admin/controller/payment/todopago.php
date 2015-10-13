@@ -57,9 +57,8 @@ class ControllerPaymentTodopago extends Controller{
             $this->logger->debug("version actual: ".$actualVersion);
             $errorMessage = null;
             switch ($actualVersion){
-                case "0.0.0":
+                case "1.0.0":
                     $this->logger->info('Begining install');
-                case "0.9.0":
                     $this->logger->debug("Upgrade to v0.9.9");
                     try{
                         $this->model_todopago_transaccion_admin->createTable(); //Crea la tabla todopago_transaccion
@@ -69,8 +68,6 @@ class ControllerPaymentTodopago extends Controller{
                         $this->logger->fatal($errorMessage, $e);
                         break;
                     }
-                case "0.9.9":
-                    $this->logger->debug("upgrade to v1.0.0");
                     try{
                         $this->model_payment_todopago->setProvincesCode(); //Guarda los códigos de prevencion de fraude para las provincias
                     }catch (Exception $e) {
@@ -78,10 +75,6 @@ class ControllerPaymentTodopago extends Controller{
                         $this->logger->fatal($errorMessage, $e);
                         break;
                     }
-                case "1.0.0":
-                    $this->logger->debug("upgrade to v1.1.0");
-                case "1.1.0":
-                    $this->logger->debug("upgrade to v1.1.1");
                     try{
                         $this->model_payment_todopago->setPostCodeRequired(); //Setea el código postal obligatorio para argentina
                     }
@@ -90,11 +83,8 @@ class ControllerPaymentTodopago extends Controller{
                         $this->logger->fatal($errorMessage, $e);
                         break;
                     }
-                case "1.1.1":
-                    $this->logger->debug("upgrade to v1.2.0");
-                case "1.2.0":
-                    $this->logger->debug("upgrade to v1.3.0");
-                case "1.3.0":
+                case "1.1.0":
+                    $this->logger-debug("Upgrade a v1.1.0");
                     $this->logger->info("Plugin instalado/upgradeado");
             }
             if ($errorMessage == null){

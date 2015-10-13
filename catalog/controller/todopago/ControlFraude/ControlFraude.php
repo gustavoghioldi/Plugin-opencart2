@@ -1,6 +1,5 @@
 <?php
 //include_once dirname(__FILE__).'/todopago_log.php';
-require_once dirname(__FILE__).'/../TodoPago/lib/Sdk.php';
 
 abstract class Controlfraude{
 

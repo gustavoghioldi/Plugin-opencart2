@@ -1,9 +1,9 @@
-<?php
+<?php 
 namespace TodoPago;
 
 require_once(dirname(__FILE__)."/Client.php");
 
-define('TODOPAGO_VERSION','1.2.0');
+define('TODOPAGO_VERSION','1.2.2');
 define('TODOPAGO_ENDPOINT_TEST','https://developers.todopago.com.ar/');
 define('TODOPAGO_ENDPOINT_PROD','https://apis.todopago.com.ar/');
 define('TODOPAGO_ENDPOINT_TENATN', 't/1.1/');
@@ -20,18 +20,18 @@ class Sdk
 	private $connection_timeout = NULL;
 	private $local_cert = NULL;
 	private $end_point = NULL;
-
+	
 	public function __construct($header_http_array, $mode = "test"){
 		$this->wsdl = array("Authorize" => TODOPAGO_WSDL_AUTHORIZE);
-
+		
 		if($mode == "test") {
 			$this->end_point = TODOPAGO_ENDPOINT_TEST;
 		} elseif ($mode == "prod") {
-			$this->end_point = TODOPAGO_ENDPOINT_PROD;
+			$this->end_point = TODOPAGO_ENDPOINT_PROD;	
 		}
-
+		
 		$this->header_http = $this->getHeaderHttp($header_http_array);
-
+	
 	}
 
 	private function getHeaderHttp($header_http_array){
@@ -39,7 +39,7 @@ class Sdk
 		foreach($header_http_array as $key=>$value){
 			$header .= "$key: $value\r\n";
 		}
-
+		
 		return $header;
 	}
 	/*
@@ -57,7 +57,7 @@ class Sdk
 		$this->user = $user;
 		$this->pass = $pass;
 	}
-
+	
 	/**
 	* Setea time out (deaulft=NULL)
 	* ejemplo:
@@ -66,16 +66,16 @@ class Sdk
 	public function setConnectionTimeout($connection_timeout){
 		$this->connection_timeout = $connection_timeout;
 	}
-
+	
 	/**
 	* Setea ruta del certificado .pem (deaulft=NULL)
 	* ejemplo:
 	* $todopago->setLocalCert('c:/miscertificados/decidir.pem');
-	*/
+	*/	
 	public function setLocalCert($local_cert){
 		$this->local_cert= file_get_contents($local_cert);
 	}
-
+	
 
 	/*
 	* GET_PAYMENT_VALUES
@@ -84,7 +84,7 @@ class Sdk
 	public function sendAuthorizeRequest($options_comercio, $options_operacion){
 		// parseo de los valores enviados por el e-commerce/custompage
 		$authorizeRequest = $this->parseToAuthorizeRequest($options_comercio, $options_operacion);
-
+		
 		$authorizeRequestResponse = $this->getAuthorizeRequestResponse($authorizeRequest);
 
 		//devuelve el formato de array el resultado de de la operación SendAuthorizeRequest
@@ -111,7 +111,7 @@ class Sdk
 		// Fix bug #49853 - https://bugs.php.net/bug.php?id=49853
 		if(version_compare(PHP_VERSION, '5.3.8') == -1) {
 			$clientSoap = new Client($local_wsdl, array(
-					'local_cert'=>($this->local_cert),
+					'local_cert'=>($this->local_cert), 
 					'connection_timeout' => $this->connection_timeout,
 					'location' => $local_end_point,
 					'encoding' => 'UTF-8',
@@ -123,10 +123,10 @@ class Sdk
 			$clientSoap->setCustomHeaders($context);
 			return $clientSoap;
 		}
-
+		
 		$clientSoap = new \SoapClient($local_wsdl, array(
 				'stream_context' => stream_context_create($context),
-				'local_cert'=>($this->local_cert),
+				'local_cert'=>($this->local_cert), 
 				'connection_timeout' => $this->connection_timeout,
 				'location' => $local_end_point,
 				'encoding' => 'UTF-8',
@@ -152,29 +152,29 @@ class Sdk
 
 		return $authorizeRequestResponseOptions;
 	}
-
+	
 	public static function sanitizeValue($string){
 		$string = htmlspecialchars_decode($string);
 		$string = strip_tags($string);
-		$re = "/\\[(.*?)\\]|<(.*?)\\>/i";
+		$re = "/\\[(.*?)\\]|<(.*?)\\>/i"; 
 		$subst = "";
 		$string = preg_replace($re, $subst, $string);
 		$string = preg_replace('/[\x00-\x1f]/','',$string);
 		$replace = array("\n","\r",'\n','\r','&nbsp;','&','<','>');
 		$string = str_replace($replace, '', $string);
-		return $string;
+		return $string;	
 	}
-
+	
 	private function getPayload($optionsAuthorize){
 		$xmlPayload = "<Request>";
 		foreach($optionsAuthorize as $key => $value){
-
+	
 			$xmlPayload .= "<" . $key . ">" . self::sanitizeValue($value) . "</" . $key . ">";
 		}
 		$xmlPayload .= "</Request>";
 
 		//Paso a UTF-8.
-		if(function_exists("mb_convert_encoding")) return mb_convert_encoding($xmlPayload, "UTF-8", "auto");
+		if(function_exists("mb_convert_encoding")) return mb_convert_encoding($xmlPayload, "UTF-8", "auto");    
         else return utf8_encode($xmlPayload);
 	}
 
@@ -193,9 +193,9 @@ class Sdk
 	}
 
 	private function parseToAuthorizeAnswer($optionsAnswer){
-
+		
 		$obj_options_answer = (object) $optionsAnswer;
-
+		
 		return $obj_options_answer;
 	}
 
@@ -210,7 +210,7 @@ class Sdk
 
 		return $authorizeAnswerResponseOptions;
 	}
-
+	
 	//REST
 	public function getStatus($arr_datos_status){
 		$url = $this->end_point.TODOPAGO_ENDPOINT_TENATN.'api/Operations/GetByOperationId/MERCHANT/'. $arr_datos_status["MERCHANT"] . '/OPERATIONID/'. $arr_datos_status["OPERATIONID"];
@@ -220,7 +220,7 @@ class Sdk
 		$url = $this->end_point.TODOPAGO_ENDPOINT_TENATN.'api/PaymentMethods/Get/MERCHANT/'. $arr_datos_merchant["MERCHANT"];
 		return $this->doRest($url);
 	}
-
+	
 	private function doRest($url){
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
