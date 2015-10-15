@@ -84,7 +84,9 @@ class ControllerPaymentTodopago extends Controller{
                         break;
                     }
                 case "1.1.0":
-                    $this->logger-debug("Upgrade a v1.1.0");
+                    $this->logger->debug("Upgrade to v1.1.0");
+                case "1.2.0":
+                    $this->logger->debug("Upgrade to v1.2.0");
                     $this->logger->info("Plugin instalado/upgradeado");
             }
             if ($errorMessage == null){

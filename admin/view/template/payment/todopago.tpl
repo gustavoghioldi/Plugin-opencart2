@@ -55,7 +55,7 @@
                         <!-- TAB GENERAL -->
                         <div class="tab-pane active" id="tab-general">
                            <input type="hidden" name="upgrade" value="<?php echo $need_upgrade ?>">
-                           <input type="hidden" name="todopago_version" value="<?php echo $installed_todopago_version; ?>">
+                           <input type="hidden" name="todopago_version" value="<?php echo $todopago_version; ?>">
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="todopago_status">Enabled</label>
                                 <div class="field col-sm-5">

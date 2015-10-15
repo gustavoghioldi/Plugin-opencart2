@@ -44,7 +44,7 @@ abstract class Controlfraude{
 		}
 
 		$this->logger->debug(" CSBTIPADDRESS - ip de la pc del comprador");
-		$payDataOperacion ['CSBTIPADDRESS'] = $this->order['ip'];
+		$payDataOperacion ['CSBTIPADDRESS'] = ($this->order['ip'] == '::1')? '127.0.0.1' : $this->order['ip'];
 
 		$this->logger->debug(" CSBTEMAIL - email del usuario al que se le emite la factura");
 		$payDataOperacion ['CSBTEMAIL'] = $this->getField($this->order['email']);
