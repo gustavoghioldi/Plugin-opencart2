@@ -210,7 +210,7 @@
                                 </div>
                             </div>
                             <div class="form-group required">
-                                <label class="col-sm-2 control-label" for="todopago_order_status_id_aprov">Estado cuando la transaccion ha sido aprovada</label>
+                                <label class="col-sm-2 control-label" for="todopago_order_status_id_aprov">Estado cuando la transaccion ha sido aprobada</label>
                                 <div class="field col-sm-5">
                                     <select class="form-control" name="todopago_order_status_id_aprov" id="todopago_order_status_id_aprov">
                                         <?php foreach ($order_statuses as $order_status) { ?>

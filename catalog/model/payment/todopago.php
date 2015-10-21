@@ -90,4 +90,9 @@ public function setLogger($logger){
     public function getDeadLine(){
         return $this->config->get('todopago_deadline');
     }
+
+    public function editPaymentMethodOrder($order_id){
+        $query = "UPDATE ".DB_PREFIX."order SET payment_method='<img src=view/image/payment/todopago.jpg>' WHERE order_id=".$order_id.";";
+        return $this->db->query($query);
+    }
   }

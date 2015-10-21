@@ -16,6 +16,7 @@ class ControllerPaymentTodopago extends Controller {
     public function index() {
         $this->load->language('payment/todopago');
         $this->load->model('todopago/transaccion');
+        $this->load->model('payment/todopago');
 
         $this->load->model('checkout/order');
         $this->logger->debug("session_data: ".json_encode($this->session->data));
@@ -26,6 +27,7 @@ class ControllerPaymentTodopago extends Controller {
         if ($order_info) {
             $data['order_id'] = $order_info['order_id'];
 
+            $this->model_payment_todopago->editPaymentMethodOrder($data['order_id']);
             if (file_exists(DIR_TEMPLATE.$this->config->get('config_template').'/template/payment/todopago.tpl')){
                 $this->template = $this->config->get('config_template') . '/template/payment/todopago.tpl';
             } else {
