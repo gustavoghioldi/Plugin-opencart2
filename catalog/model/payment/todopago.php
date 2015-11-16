@@ -83,7 +83,7 @@ public function setLogger($logger){
     }
 
     public function getQtyOrders($customerId){
-        $qty = $this->db->query("SELECT COUNT(*) AS qty FROM ".DB_PREFIX."order WHERE customer_id = $customerId;");
+        $qty = $this->db->query("SELECT COUNT(*) AS qty FROM `".DB_PREFIX."order` WHERE customer_id = $customerId;");
         return $qty->row['qty'];
     }
 
@@ -92,7 +92,7 @@ public function setLogger($logger){
     }
 
     public function editPaymentMethodOrder($order_id){
-        $query = "UPDATE ".DB_PREFIX."order SET payment_method='<img src=view/image/payment/todopago.jpg>' WHERE order_id=".$order_id.";";
+        $query = "UPDATE `".DB_PREFIX."order` SET payment_method='<img src=view/image/payment/todopago.jpg>' WHERE order_id=".$order_id.";";
         return $this->db->query($query);
     }
   }
