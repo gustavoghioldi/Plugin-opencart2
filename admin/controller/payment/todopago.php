@@ -412,12 +412,23 @@ class ControllerPaymentTodopago extends Controller{
 
   }
 
-  private function get_authorizationHTTP(){
+   private function get_authorizationHTTP(){
+    
     if($this->get_mode()=="test"){
-            return  json_decode(html_entity_decode($this->config->get('todopago_authorizationHTTPtest')),TRUE);
+            $http_header = html_entity_decode($this->config->get('todopago_authorizationHTTPtest'));
+            
         } else {
-            return  json_decode(html_entity_decode($this->config->get('todopago_authorizationHTTPproduccion')),TRUE);
+            $http_header = html_entity_decode($this->config->get('todopago_authorizationHTTPproduccion'));
         }
+
+        if (json_decode($http_header,TRUE)==null){
+                $http_header = array("Authorization"=>$http_header);
+        }
+        else{
+            $http_header = json_decode($http_header,TRUE);
+        }
+
+        return $http_header; 
   }
 
   private function get_mode(){

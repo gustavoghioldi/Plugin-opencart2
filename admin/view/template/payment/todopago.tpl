@@ -138,7 +138,7 @@
                                 <div class="field col-sm-5">
                                     <input type="text" name="todopago_authorizationHTTPtest" value="<?php echo $todopago_authorizationHTTPtest; ?>" placeholder="Authorization" id="todopago_authorizationHTTPtest" class="form-control" />
                                 </div>
-                                <div class="input-field col-sm-5"><em>Se deben pasar los datos en formato json. ejemplo: { "Authorization":"PRISMA 912EC803B2CE49E4A541068D495AB570"}</em>
+                                <div class="input-field col-sm-5"><em>ejemplo: PRISMA 912EC803B2CE4xxxx541068D495AB570</em>
                                 </div>
                             </div>
                             <div class="form-group required">
